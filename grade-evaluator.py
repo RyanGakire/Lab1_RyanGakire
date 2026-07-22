@@ -38,15 +38,22 @@ def evaluate_grades(data):
     """
     print("\n--- Processing Grades ---")
     
-    # TODO: a) Check if all scores are percentage based (0-100)
+    # a) Check if all scores are percentage based (0-100)
+    invalid_scores = [item for item in data if item['score'] < 0 or item['score'] > 100]
+    if invalid_scores:
+        print("Error: One or more scores are outside the 0-100 range.")
+        for item in invalid_scores:
+            print(f"  - {item['assignment']} ({item['group']}): {item['score']}")
+        sys.exit(1)
+
+    print("All scores are percentage-based and within the 0-100 range.")
+
     # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
     # TODO: c) Calculate the Final Grade and GPA
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     # TODO: e) Check for failed formative assignments (< 50%)
     #          and determine which one(s) have the highest weight for resubmission.
     # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
-    
-    pass
 
 if __name__ == "__main__":
     # 1. Load the data
