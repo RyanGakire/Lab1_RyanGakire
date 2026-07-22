@@ -48,7 +48,28 @@ def evaluate_grades(data):
 
     print("All scores are percentage-based and within the 0-100 range.")
 
-    # TODO: b) Validate total weights (Total=100, Summative=40, Formative=60)
+    # b) Validate total weights (Total=100, Summative=40, Formative=60)
+    total_weight = sum(item['weight'] for item in data)
+    summative_weight = sum(item['weight'] for item in data if item['group'].lower() == 'summative')
+    formative_weight = sum(item['weight'] for item in data if item['group'].lower() == 'formative')
+
+    # Allow tiny floating point tolerance
+    tol = 1e-6
+    errors = []
+    if abs(total_weight - 100.0) > tol:
+        errors.append(f"Total weight must be 100 but is {total_weight}.")
+    if abs(summative_weight - 40.0) > tol:
+        errors.append(f"Summative weight must be 40 but is {summative_weight}.")
+    if abs(formative_weight - 60.0) > tol:
+        errors.append(f"Formative weight must be 60 but is {formative_weight}.")
+
+    if errors:
+        print("Error: Invalid weighting configuration:")
+        for e in errors:
+            print(f"  - {e}")
+        sys.exit(1)
+
+    print("Weights validated: Total=100, Summative=40, Formative=60.")
     # TODO: c) Calculate the Final Grade and GPA
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     # TODO: e) Check for failed formative assignments (< 50%)
