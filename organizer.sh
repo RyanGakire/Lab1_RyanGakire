@@ -22,3 +22,7 @@ if [ -f "$SOURCE_FILE" ]; then
 else
     echo "$(date): Source file '$SOURCE_FILE' not found." >> "$LOG_FILE"
 fi
+
+# Reset the workspace with a new empty grades.csv file
+touch "$SOURCE_FILE"
+echo "$(date): Created new empty '$SOURCE_FILE'." >> "$LOG_FILE"
