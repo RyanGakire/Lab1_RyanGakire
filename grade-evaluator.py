@@ -38,6 +38,10 @@ def evaluate_grades(data):
     """
     print("\n--- Processing Grades ---")
     
+    if not data:
+        print("Error: No assignment data found in the CSV file.")
+        sys.exit(1)
+    
     # a) Check if all scores are percentage based (0-100)
     invalid_scores = [item for item in data if item['score'] < 0 or item['score'] > 100]
     if invalid_scores:
@@ -105,9 +109,18 @@ def evaluate_grades(data):
 
     print(f"Final decision: {overall_status}")
 
-    # TODO: e) Check for failed formative assignments (< 50%)
-    #          and determine which one(s) have the highest weight for resubmission.
-    # TODO: f) Print the final decision (PASSED / FAILED) and resubmission options
+    # e) Check for failed formative assignments (< 50%)
+    #    and determine which one(s) have the highest weight for resubmission.
+    failed_formative = [item for item in data if item['group'].lower() == 'formative' and item['score'] < 50.0]
+    
+    # f) Print the final decision (PASSED / FAILED) and resubmission options
+    if failed_formative:
+        failed_formative.sort(key=lambda x: x['weight'], reverse=True)
+        print("\nResubmission options (failed formative assignments, sorted by weight):")
+        for item in failed_formative:
+            print(f"  - {item['assignment']} (Score: {item['score']:.2f}%, Weight: {item['weight']}%)")
+
+
 
 if __name__ == "__main__":
     # 1. Load the data
