@@ -70,7 +70,24 @@ def evaluate_grades(data):
         sys.exit(1)
 
     print("Weights validated: Total=100, Summative=40, Formative=60.")
-    # TODO: c) Calculate the Final Grade and GPA
+
+    # c) Calculate the Final Grade and GPA
+    final_grade = sum(item['score'] * item['weight'] / 100.0 for item in data)
+
+    def grade_to_gpa(grade):
+        if grade >= 90.0:
+            return 4.0
+        if grade >= 80.0:
+            return 3.0
+        if grade >= 70.0:
+            return 2.0
+        if grade >= 60.0:
+            return 1.0
+        return 0.0
+
+    gpa = grade_to_gpa(final_grade)
+    print(f"Final grade: {final_grade:.2f}%")
+    print(f"GPA equivalent: {gpa:.1f}")
     # TODO: d) Determine Pass/Fail status (>= 50% in BOTH categories)
     # TODO: e) Check for failed formative assignments (< 50%)
     #          and determine which one(s) have the highest weight for resubmission.
