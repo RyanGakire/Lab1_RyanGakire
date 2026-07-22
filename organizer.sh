@@ -11,6 +11,12 @@ if [ ! -d "$ARCHIVE_DIR" ]; then
     echo "$(date): Created archive directory '$ARCHIVE_DIR'." >> "$LOG_FILE"
 fi
 
+# Guard: nothing to achieve if the source file doesn't exist
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "$(date): Source file '$SOURCE_FILE' not found. Exiting." >> "$LOG_FILE"
+    exit 1
+fi
+
 # Timestamp generation
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 NEW_FILE_NAME="grades_$TIMESTAMP.csv"
