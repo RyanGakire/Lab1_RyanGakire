@@ -26,3 +26,8 @@ fi
 # Reset the workspace with a new empty grades.csv file
 touch "$SOURCE_FILE"
 echo "$(date): Created new empty '$SOURCE_FILE'." >> "$LOG_FILE"
+
+# Log the operation
+echo "$(date +"%Y-%m-%d %H:%M:%S") | original=$SOURCE_FILE | archived_as=$ARCHIVE_DIR/$NEW_FILE_NAME" >> "$LOG_FILE"
+echo "Archived '$SOURCE_FILE' as '$ARCHIVE_DIR/$NEW_FILE_NAME' and reset the workspace."
+echo "A fresh, empty '$SOURCE_FILE' is ready for the next set of grades."
