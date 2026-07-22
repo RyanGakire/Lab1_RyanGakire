@@ -14,3 +14,11 @@ fi
 # Timestamp generation
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 NEW_FILE_NAME="grades_$TIMESTAMP.csv"
+
+# Rename and move the source file to the archive directory
+if [ -f "$SOURCE_FILE" ]; then
+    mv "$SOURCE_FILE" "$ARCHIVE_DIR/$NEW_FILE_NAME"
+    echo "$(date): Moved '$SOURCE_FILE' to '$ARCHIVE_DIR/$NEW_FILE_NAME'." >> "$LOG_FILE"
+else
+    echo "$(date): Source file '$SOURCE_FILE' not found." >> "$LOG_FILE"
+fi
